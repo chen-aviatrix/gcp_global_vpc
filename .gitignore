@@ -1,0 +1,19 @@
+# Terraform working directories and provider/module caches
+**/.terraform/
+**/.terraform.lock.hcl
+
+# State files (may contain secrets)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Variable files with sensitive values
+*.tfvars
+*.tfvars.json
+
+# Crash logs
+crash.log
+crash.*.log
+
+# SSH keys / certs
+*.pem
