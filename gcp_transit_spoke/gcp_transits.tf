@@ -13,7 +13,8 @@ module "stp539_transit_e1" {
   region  = "us-east1"
 
   # HA gateway
-  ha_gw = true
+  ha_gw        = true
+  single_az_ha = false
 
   # Deploy into the existing VPC created earlier
   use_existing_vpc = true

@@ -8,6 +8,7 @@ module "spoke_onprem_e1" {
   cidr            = "192.168.1.0/24"
   account         = var.aviatrix_aws_account
   ha_gw           = true
+  single_az_ha    = false
   attached        = false
   enable_bgp      = true
   local_as_number = "5001"
@@ -71,6 +72,7 @@ module "spoke_onprem_w1" {
   cidr            = "192.168.2.0/24"
   account         = var.aviatrix_aws_account
   ha_gw           = true
+  single_az_ha    = false
   attached        = false
   enable_bgp      = true
   local_as_number = "5002"
@@ -85,10 +87,14 @@ resource "aviatrix_transit_external_device_conn" "t2_to_onprem_w1" {
   bgp_local_as_num  = "65002"
   bgp_remote_as_num = "5002"
   remote_gateway_ip = module.spoke_onprem_w1.spoke_gateway.eip
+  local_tunnel_cidr = "169.254.100.1/30,169.254.100.5/30"
+  remote_tunnel_cidr = "169.254.100.2/30,169.254.100.6/30"
 
   ha_enabled               = true
   backup_bgp_remote_as_num = "5002"
   backup_remote_gateway_ip = module.spoke_onprem_w1.spoke_gateway.ha_public_ip
+  backup_local_tunnel_cidr = "169.254.100.9/30,169.254.100.13/30"
+  backup_remote_tunnel_cidr = "169.254.100.10/30,169.254.100.14/30"
 
   pre_shared_key        = "avx"
   backup_pre_shared_key = "avx"
@@ -105,10 +111,14 @@ resource "aviatrix_transit_external_device_conn" "onprem_w1_to_t2" {
   bgp_local_as_num  = "5002"
   bgp_remote_as_num = "65002"
   remote_gateway_ip = module.transit_aws_t2.transit_gateway.eip
+  local_tunnel_cidr = "169.254.100.2/30,169.254.100.10/30"
+  remote_tunnel_cidr = "169.254.100.1/30,169.254.100.9/30"
 
   ha_enabled               = true
   backup_bgp_remote_as_num = "65002"
   backup_remote_gateway_ip = module.transit_aws_t2.transit_gateway.ha_public_ip
+  backup_local_tunnel_cidr = "169.254.100.6/30,169.254.100.14/30"
+  backup_remote_tunnel_cidr = "169.254.100.5/30,169.254.100.13/30"
 
   pre_shared_key        = "avx"
   backup_pre_shared_key = "avx"

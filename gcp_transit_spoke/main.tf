@@ -12,6 +12,7 @@ module "transit_aws_t1" {
   cidr          = "10.1.0.0/16"
   account       = var.aviatrix_aws_account
   ha_gw         = true
+  single_az_ha  = false
   local_as_number = "65001"
 }
 
@@ -29,6 +30,7 @@ module "transit_aws_t2" {
   cidr            = "10.2.0.0/16"
   account         = var.aviatrix_aws_account
   ha_gw           = true
+  single_az_ha    = false
   insane_mode     = true
   az2             = "c"
   local_as_number = "65002"
@@ -48,6 +50,7 @@ module "spoke1" {
   cidr            = "10.11.0.0/16"
   account         = var.aviatrix_aws_account
   ha_gw           = true
+  single_az_ha    = false
   transit_gw      = module.transit_aws_t1.transit_gateway.gw_name
   group_mode      = true
   spoke_gw_amount = 4
@@ -65,9 +68,10 @@ module "spoke2" {
   name        = "spoke2"
   region      = var.aws_region
   cidr        = "10.22.0.0/16"
-  account     = var.aviatrix_aws_account
-  ha_gw       = true
-  insane_mode = true
-  az2         = "c"
-  transit_gw  = module.transit_aws_t2.transit_gateway.gw_name
+  account      = var.aviatrix_aws_account
+  ha_gw        = true
+  single_az_ha = false
+  insane_mode  = true
+  az2          = "c"
+  transit_gw   = module.transit_aws_t2.transit_gateway.gw_name
 }

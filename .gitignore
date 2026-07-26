@@ -6,6 +6,7 @@
 *.tfstate
 *.tfstate.*
 *.tfstate.backup
+*.tfplan
 
 # Variable files with sensitive values
 *.tfvars

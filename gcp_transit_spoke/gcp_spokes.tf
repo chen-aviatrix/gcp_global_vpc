@@ -15,6 +15,7 @@ module "stp539_spoke_e1" {
 
   # Gateway group: 1 primary + 2 HA gateways
   ha_gw           = true
+  single_az_ha    = false
   group_mode      = true
   spoke_gw_amount = 3
 
@@ -50,6 +51,7 @@ module "stp539_spoke_w1" {
 
   # Gateway group: 1 primary + 2 HA gateways
   ha_gw           = true
+  single_az_ha    = false
   group_mode      = true
   spoke_gw_amount = 3
 

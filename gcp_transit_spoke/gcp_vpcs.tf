@@ -15,14 +15,14 @@ resource "aviatrix_account" "gcp" {
 
 locals {
   gcp_vpc_subnets = [
-    { region = "us-east1", cidr = "10.10.0.0/24", name = "stp539-vpc-us-east1-1" },
-    { region = "us-east1", cidr = "10.10.1.0/24", name = "stp539-vpc-us-east1-2" },
-    { region = "us-east1", cidr = "10.10.2.0/24", name = "stp539-vpc-us-east1-3" },
-    { region = "us-east1", cidr = "10.10.3.0/24", name = "stp539-vpc-us-east1-4" },
-    { region = "us-west1", cidr = "10.10.128.0/24", name = "stp539-vpc-us-west1-1" },
-    { region = "us-west1", cidr = "10.10.129.0/24", name = "stp539-vpc-us-west1-2" },
-    { region = "us-west1", cidr = "10.10.130.0/24", name = "stp539-vpc-us-west1-3" },
-    { region = "us-west1", cidr = "10.10.131.0/24", name = "stp539-vpc-us-west1-4" },
+    { region = "us-west1", cidr = "10.10.0.0/24", name = "stp539-vpc-us-west1-1" },
+    { region = "us-west1", cidr = "10.10.1.0/24", name = "stp539-vpc-us-west1-2" },
+    { region = "us-west1", cidr = "10.10.2.0/24", name = "stp539-vpc-us-west1-3" },
+    { region = "us-west1", cidr = "10.10.3.0/24", name = "stp539-vpc-us-west1-4" },
+    { region = "us-east1", cidr = "10.10.128.0/24", name = "stp539-vpc-us-east1-1" },
+    { region = "us-east1", cidr = "10.10.129.0/24", name = "stp539-vpc-us-east1-2" },
+    { region = "us-east1", cidr = "10.10.130.0/24", name = "stp539-vpc-us-east1-3" },
+    { region = "us-east1", cidr = "10.10.131.0/24", name = "stp539-vpc-us-east1-4" },
   ]
 }
 
@@ -52,14 +52,14 @@ locals {
     { region = "us-central1", cidr = "10.20.1.0/24", name = "stp539-vpc-us2-central1-2" },
     { region = "us-central1", cidr = "10.20.2.0/24", name = "stp539-vpc-us2-central1-3" },
     { region = "us-central1", cidr = "10.20.3.0/24", name = "stp539-vpc-us2-central1-4" },
-    { region = "us-south1", cidr = "10.20.64.0/24", name = "stp539-vpc-us2-south1-1" },
-    { region = "us-south1", cidr = "10.20.65.0/24", name = "stp539-vpc-us2-south1-2" },
-    { region = "us-south1", cidr = "10.20.66.0/24", name = "stp539-vpc-us2-south1-3" },
-    { region = "us-south1", cidr = "10.20.67.0/24", name = "stp539-vpc-us2-south1-4" },
-    { region = "us-west2", cidr = "10.20.128.0/24", name = "stp539-vpc-us2-west2-1" },
-    { region = "us-west2", cidr = "10.20.129.0/24", name = "stp539-vpc-us2-west2-2" },
-    { region = "us-west2", cidr = "10.20.130.0/24", name = "stp539-vpc-us2-west2-3" },
-    { region = "us-west2", cidr = "10.20.131.0/24", name = "stp539-vpc-us2-west2-4" },
+    { region = "us-west2", cidr = "10.20.64.0/24", name = "stp539-vpc-us2-west2-1" },
+    { region = "us-west2", cidr = "10.20.65.0/24", name = "stp539-vpc-us2-west2-2" },
+    { region = "us-west2", cidr = "10.20.66.0/24", name = "stp539-vpc-us2-west2-3" },
+    { region = "us-west2", cidr = "10.20.67.0/24", name = "stp539-vpc-us2-west2-4" },
+    { region = "us-south1", cidr = "10.20.128.0/24", name = "stp539-vpc-us2-south1-1" },
+    { region = "us-south1", cidr = "10.20.129.0/24", name = "stp539-vpc-us2-south1-2" },
+    { region = "us-south1", cidr = "10.20.130.0/24", name = "stp539-vpc-us2-south1-3" },
+    { region = "us-south1", cidr = "10.20.131.0/24", name = "stp539-vpc-us2-south1-4" },
   ]
 }
 
