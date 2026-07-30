@@ -19,6 +19,12 @@ variable "aviatrix_aws_account" {
   default     = "aws_admin"
 }
 
+variable "TB_prefix" {
+  type        = string
+  description = "Naming prefix applied to all GCP resource names"
+  default     = "cliu1"
+}
+
 variable "aviatrix_gcp_account" {
   type        = string
   description = "Aviatrix access account name for GCP (as registered in the controller)"
