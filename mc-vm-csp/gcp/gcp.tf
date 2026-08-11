@@ -67,7 +67,7 @@ locals {
   instance_size = length(var.instance_size) > 0 ? var.instance_size : lookup(local.instance_size_map, local.cloud, null)
   instance_size_map = {
     aws   = "t3.small",
-    gcp   = "n1-standard-1",
+    gcp   = "e2-micro",
     azure = "Standard_B1ms",
     oci   = "VM.Standard.A1.Flex"
   }
@@ -146,10 +146,11 @@ resource "google_compute_firewall" "ipv6_egress_firewall" {
 }
 
 resource "google_compute_instance" "public_instance" {
-  count        = local.cloud == "gcp" ? var.vm_count : 0
-  name         = "${var.resource_name_label}-public-vm${count.index}"
-  machine_type = local.instance_size
-  zone         = var.use_custom_subnets ? "${var.public_subnet_region_list[count.index % local.num_pub_subnet]}-${var.az1}" : local.zone1
+  count                     = local.cloud == "gcp" ? var.vm_count : 0
+  name                      = "${var.resource_name_label}-public-vm${count.index}"
+  machine_type              = local.instance_size
+  allow_stopping_for_update = true
+  zone                      = var.use_custom_subnets ? "${var.public_subnet_region_list[count.index % local.num_pub_subnet]}-${var.az1}" : local.zone1
 
   boot_disk {
     initialize_params {
@@ -200,10 +201,11 @@ resource "google_compute_instance" "public_instance" {
 }
 
 resource "google_compute_instance" "private_instance" {
-  count        = local.cloud == "gcp" ? var.vm_count : 0
-  name         = "${var.resource_name_label}-private-vm${count.index}"
-  machine_type = local.instance_size
-  zone         = var.use_custom_subnets ? "${var.private_subnet_region_list[count.index % local.num_priv_subnet]}-${var.az2}" : local.zone2
+  count                     = local.cloud == "gcp" ? var.vm_count : 0
+  name                      = "${var.resource_name_label}-private-vm${count.index}"
+  machine_type              = local.instance_size
+  allow_stopping_for_update = true
+  zone                      = var.use_custom_subnets ? "${var.private_subnet_region_list[count.index % local.num_priv_subnet]}-${var.az2}" : local.zone2
 
   boot_disk {
     initialize_params {

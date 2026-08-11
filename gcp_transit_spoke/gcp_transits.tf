@@ -12,6 +12,8 @@ module "transit_e1" {
   account = aviatrix_account.gcp.account_name
   region  = "us-east1"
 
+  local_as_number = "65101"
+
   # Smallest Aviatrix-supported GCP gateway size
   instance_size = "n1-standard-1"
 
@@ -39,6 +41,8 @@ module "transit_w1" {
   name    = "${var.TB_prefix}-tr-w1"
   account = aviatrix_account.gcp.account_name
   region  = "us-west1"
+
+  local_as_number = "65102"
 
   # HA gateway
   ha_gw        = true

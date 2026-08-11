@@ -13,6 +13,32 @@ locals {
   prefix        = var.TB_prefix
 }
 
+module "aws_spoke1_vm" {
+  source               = "../mc-vm-csp/aws"
+  resource_name_label  = "${local.prefix}-spoke1-vm"
+  providers            = { aws = aws.us_east_1 }
+  region               = module.spoke1.vpc.region
+  vpc_id               = module.spoke1.vpc.vpc_id
+  public_subnet_id     = module.spoke1.vpc.public_subnets[0].subnet_id
+  private_subnet_id    = module.spoke1.vpc.private_subnets[0].subnet_id
+  ingress_cidrs        = var.ingress_cidrs # List of CIDRs to allow ingress traffic thru SSH/ICMP to the VMs
+  use_existing_keypair = true
+  public_key           = tls_private_key.terraform_key.public_key_openssh
+}
+
+module "aws_spoke2_vm" {
+  source               = "../mc-vm-csp/aws"
+  resource_name_label  = "${local.prefix}-spoke2-vm"
+  providers            = { aws = aws.us_west_1 }
+  region               = module.spoke2.vpc.region
+  vpc_id               = module.spoke2.vpc.vpc_id
+  public_subnet_id     = module.spoke2.vpc.public_subnets[0].subnet_id
+  private_subnet_id    = module.spoke2.vpc.private_subnets[0].subnet_id
+  ingress_cidrs        = var.ingress_cidrs # List of CIDRs to allow ingress traffic thru SSH/ICMP to the VMs
+  use_existing_keypair = true
+  public_key           = tls_private_key.terraform_key.public_key_openssh
+}
+
 module "aws_onpreme1_vm" {
   source               = "../mc-vm-csp/aws"
   resource_name_label  = "${local.prefix}-onprem-e1-vm"
@@ -47,6 +73,9 @@ module "gcp_vpc_us_e1_vm1" {
   vpc_id               = aviatrix_vpc.vpc_us.vpc_id
   public_subnet_id     = aviatrix_vpc.vpc_us.subnets[4].name
   private_subnet_id    = aviatrix_vpc.vpc_us.subnets[4].name
+  # us-east1 has no "-a" zone (only b/c/d); override module defaults (a/b)
+  az1                  = "b"
+  az2                  = "c"
   ingress_cidrs        = var.ingress_cidrs # List of CIDRs to allow ingress traffic thru SSH/ICMP to the VMs
   use_existing_keypair = true
   public_key           = tls_private_key.terraform_key.public_key_openssh
@@ -60,6 +89,9 @@ module "gcp_vpc_us_e1_vm2" {
   vpc_id               = aviatrix_vpc.vpc_us.vpc_id
   public_subnet_id     = aviatrix_vpc.vpc_us.subnets[5].name
   private_subnet_id    = aviatrix_vpc.vpc_us.subnets[5].name
+  # us-east1 has no "-a" zone (only b/c/d); override module defaults (a/b)
+  az1                  = "b"
+  az2                  = "c"
   ingress_cidrs        = var.ingress_cidrs # List of CIDRs to allow ingress traffic thru SSH/ICMP to the VMs
   use_existing_keypair = true
   public_key           = tls_private_key.terraform_key.public_key_openssh

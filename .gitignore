@@ -18,3 +18,5 @@ crash.*.log
 
 # SSH keys / certs
 *.pem
+diag1.json
+diag2.json
