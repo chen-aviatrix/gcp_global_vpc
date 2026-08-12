@@ -129,8 +129,11 @@ resource "aviatrix_transit_external_device_conn" "onprem_w1_to_t2" {
 }
 
 locals {
-  tr_w1_ip = "34.53.77.80"
+  # GCP transit gateway public IPs (primary + HA) for onprem s2c connections
+  tr_w1_ip   = "34.53.77.80"
   tr_w1_haip = "136.66.87.255"
+  tr_e1_ip   = "35.229.37.176"
+  tr_e1_haip = "35.196.74.226"
 }
 resource "aviatrix_transit_external_device_conn" "onprem_w1_to_remote_tr_w1" {
   vpc_id            = module.spoke_onprem_w1.vpc.vpc_id
@@ -154,4 +157,28 @@ resource "aviatrix_transit_external_device_conn" "onprem_w1_to_remote_tr_w1" {
   backup_pre_shared_key = "avx"
 
   depends_on = [aviatrix_transit_external_device_conn.t2_to_onprem_w1]
+}
+
+resource "aviatrix_transit_external_device_conn" "onprem_e1_to_remote_tr_e1" {
+  vpc_id            = module.spoke_onprem_e1.vpc.vpc_id
+  connection_name   = "onpreme1-to-tr-e1"
+  gw_name           = module.spoke_onprem_e1.spoke_gateway.gw_name
+  connection_type   = "bgp"
+  tunnel_protocol   = "IPsec"
+  bgp_local_as_num  = "5001"
+  bgp_remote_as_num = "65101"
+  remote_gateway_ip = local.tr_e1_ip
+  local_tunnel_cidr = "169.254.200.2/30,169.254.200.10/30"
+  remote_tunnel_cidr = "169.254.200.1/30,169.254.200.9/30"
+
+  ha_enabled               = true
+  backup_bgp_remote_as_num = "65101"
+  backup_remote_gateway_ip = local.tr_e1_haip
+  backup_local_tunnel_cidr = "169.254.200.6/30,169.254.200.14/30"
+  backup_remote_tunnel_cidr = "169.254.200.5/30,169.254.200.13/30"
+
+  pre_shared_key        = "avx"
+  backup_pre_shared_key = "avx"
+
+  depends_on = [aviatrix_transit_external_device_conn.t1_to_onprem1]
 }
