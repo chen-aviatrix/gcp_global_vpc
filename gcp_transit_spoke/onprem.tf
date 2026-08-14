@@ -1,3 +1,18 @@
+module "spoke_onprem0" {
+  source  = "terraform-aviatrix-modules/mc-spoke/aviatrix"
+  version = "~> 1.6"
+
+  cloud           = "AWS"
+  name            = "onprem0"
+  region          = "us-east-1"
+  cidr            = "192.168.3.0/24"
+  account         = var.aviatrix_aws_account
+  ha_gw           = false # single gateway in the group
+  attached        = false
+  enable_bgp      = true
+  local_as_number = "5100"
+}
+
 module "spoke_onprem_e1" {
   source  = "terraform-aviatrix-modules/mc-spoke/aviatrix"
   version = "~> 1.6"
@@ -130,10 +145,10 @@ resource "aviatrix_transit_external_device_conn" "onprem_w1_to_t2" {
 
 locals {
   # GCP transit gateway public IPs (primary + HA) for onprem s2c connections
-  tr_w1_ip   = "34.53.77.80"
-  tr_w1_haip = "136.66.87.255"
-  tr_e1_ip   = "35.229.37.176"
-  tr_e1_haip = "35.196.74.226"
+  tr_w1_ip   = "136.67.23.107"
+  tr_w1_haip = "34.127.108.85"
+  tr_e1_ip   = "34.26.54.31"
+  tr_e1_haip = "34.74.59.251"
 }
 resource "aviatrix_transit_external_device_conn" "onprem_w1_to_remote_tr_w1" {
   vpc_id            = module.spoke_onprem_w1.vpc.vpc_id
