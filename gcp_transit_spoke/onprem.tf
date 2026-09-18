@@ -1,18 +1,3 @@
-module "spoke_onprem0" {
-  source  = "terraform-aviatrix-modules/mc-spoke/aviatrix"
-  version = "~> 1.6"
-
-  cloud           = "AWS"
-  name            = "onprem0"
-  region          = "us-east-1"
-  cidr            = "192.168.3.0/24"
-  account         = var.aviatrix_aws_account
-  ha_gw           = false # single gateway in the group
-  attached        = false
-  enable_bgp      = true
-  local_as_number = "5100"
-}
-
 module "spoke_onprem_e1" {
   source  = "terraform-aviatrix-modules/mc-spoke/aviatrix"
   version = "~> 1.6"
